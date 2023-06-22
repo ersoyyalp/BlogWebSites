@@ -1,0 +1,171 @@
+﻿List ve ICollection arasındaki fark nedir?
+"ICollection" bir interface iken "List" ise bir class tır. "ICollection", aralarında "List" de bulunan ve "ICollection" interface'ini implemente eden herhangi bir classı veya bu classlardan türetilen herhangi bir classı alabilirken, "List" sadece kendini ve List den türetilen sınıfları kabul eder.
+
+DRY nedir?
+DRY (Don’t Repeat Yourself) prensibine göre kod içindeki her parçacığın kendine özelleştirilmiş bir yapısı, görevi olmalıdır. Aksi halde bir değişiklik yapılması gerektiğinde o parçadan etkilenen diğer parçalarda da değişiklik yapılması gerekir ki bu da çoğu zaman karmaşıklığa sebep olur. Kod tekrarından kaçınılmalı, tekrarlamalar soyutlama yolu ile aşılmalıdır.
+
+20. Video: Projeyi GitHuba yüklemek.
+Projeyi GitHub'a yükledim.
+
+--EfCategoryRepository'i kullanmamızdaki dezavantaj Entity Framework'e bağımlı olmamız. İlerde başka bir teknoloji geldiğinde projeyi ona geçirmek için neredeyse bütün katmanlardaki kodları tek tek değiştirmemiz gerekir ama interface kullanarak bu bağımlılığı yok eder ve istersek ileride daha farklı teknolojilere geçebiliriz. Avantaj olaraksa kısa vadede daha az kod yazıp daha kısa sürede projeyi bitirebiliriz.
+
+Eager Loading: nesneyi ihtiyaç anından hemen önce oluşturur ve bekletir. Linq sorgusu çalıştırıldığında verilerin tamamını yükler ve hafızaya alır. Daha ucuz maliyetlidir.
+Lazy Loading : Bu yöntemde veriler sorguya bağlı olarak çekilir ancak veri setinin içindeki tüm dataları yüklemek yerine verilerin çağrıldıkça otomatik yüklenmesi söz konusudur. Daha pahalı işlemdir.
+
+30. Video: View Component ile Partial view arasındaki fark araştırılacak.(Videonun yorumlarında cevaplar var)
+Kullanım amacı olarak birebir aynı olan bu iki yapının birbirinden ayrılmasını sağlayan özelliği View Component tarafında server tarafa daha az yük bindirilmesinin amaçlanmış olmasıdır. Partial View içerisinde tanımlanan bir method local function olarak kullanılır.Bu methodların dışarıdan bire bire tetiklenmesi ve kullanılması mümkün değildir.
+Örnek:“Customer listemiz var ve her eklenen datadan sonra listenin anlık olarak güncellenmesini ve bu güncelleme sırasında zaman kaybı olmadan yapılmasını istiyoruz”.
+
+Çözüm:“Bahsettiğim mevcut durumun üstesinden gelmek için CustomerController içerisinde PartialViewResult dönen bir method yazılır. Method ajax ile tetiklenir ve dönen Partial append edilir.Bunun gibi bir çok durumda benzer süreçler işlemektedir.
+
+Buda uygulamanın Controller ile çok fazla haberleşmesini ve bu neticede performans kayıplarını beraberinde getirmektedir. View Component yapısının tamda bu noktada Partial View yapısındaki bu dezavantajı ortadan kaldırmaktadır.
+
+Asp.Net Core ile birlikte gelen View Componentleri WebForms ile kullanılan UserControl veya MVC ile kullandığımız Partial View yapılarına benzetebiliriz. Web uygulamalarımızda birden fazla alanda kullanmak istediğimiz viewlerimiz için ViewComponent’i tercih edebiliriz.
+
+MVC’nin önceki sürümlerinde birden fazla alanda kullanmak istediğimiz bileşenleri genellikle Partial View olarak tasarlar ve [ChildActionOnly] attribute ile birlikte tek başlarına çağrılmalarını engellerdik. Bu yapı bizim için büyük kolaylık sağlardı. Asp.Net Core ile birlikte [ChildActionOnly] attribute kullanımı kaldırılmış ve yeni ViewComponent yapısı geliştirilmiştir. ViewComponentler dışarıdan Http istek ile doğrudan ulaşılamazlar.
+
+32 Video: Eğer Blogta Hiç Yorum yoksa ilk yorumu siz yazın diye yazdırılacak.
+
+33. Video: Kayıt Olurken Parolanın 2 kez girilip onaylanması.
+
+34. Video: Kayıt olma sayfasında değerlerini view modelde tutucağımız bir şehir seçimi
+
+Controller:
+public IActionResult Index()
+        {
+            var model = new ViewModel();
+            model.Sehirler = new List<SelectListItem>();
+            model.Sehirler.Add(new SelectListItem() { Text = "İstanbul", Value = "1", Selected = false });
+            model.Sehirler.Add(new SelectListItem() { Text = "Ankara", Value = "2", Selected = false });
+            model.Sehirler.Add(new SelectListItem() { Text = "İzmir", Value = "3", Selected = false });
+            model.Sehirler.Add(new SelectListItem() { Text = "Diğer", Value = "4", Selected = false });
+            return View(model);
+        }
+
+View Model: 
+public class ViewModel
+    {
+        public string Sehir { get; set; }
+        public IList<SelectListItem> Sehirler { get; set; }
+
+    }
+
+Index View: 
+@using (Html.BeginForm("Index", "RegisterController", FormMethod.Post))
+                        {
+                            <div class="form-group col-md-6">
+                                <label for="validationCity mb-2">Şehir Seçiniz</label>
+                                <br />
+                                <label>
+                                    @if (Model != null)
+                                    {
+                                        @Html.DropDownListFor(m => m.Sehir, Model.Sehirler);
+                                    }
+                                </label>
+
+                            </div>
+                        }
+
+
+35. Video: Fluent Validationda Kullanıcının parolası en az bir büyük harf, en az bir küçük harf ve en az 1 sayı olacak.
+RuleFor(x => x.WriterPassword).NotEmpty().WithMessage("Şifre Boş Geçilemez")
+                .MinimumLength(8).WithMessage("Şifre 8 karakterden küçük olamaz.")
+                .MaximumLength(16).WithMessage("Şifre 16 karakterden büyük olamaz.")
+                .Matches(@"[A-Z]+").WithMessage("Şifrede en az bir büyük harf olmalıdır.")
+                .Matches(@"[a-z]+").WithMessage("Şifrede en az bir küçük harf olmalıdır.")
+                .Matches(@"[0-9]+").WithMessage("Şifrede en az bir rakam olmalıdır");
+
+39. Video Yorum ve Bülteni ekleme sorununun giderilmesi
+
+40. Video Github Repoları güncellendi
+
+48. Video: ClaimsIdentity'de 2. parametre neden verilmeli ? Araştırılacak.
+Authentication="kimlik doğrulaması"
+Authorization="kimlik yetkilendirme"
+Claim=""kullanıcı hakkında bilgiler tutan yapılar diyebiliriz."
+Kısaca Claim anlatmamız gerekirse Örneğin:Youtobe'a giriş yaptık ve Youtobe bize izleyici rolü tanımladı,bu tanımlama ile beraber istediğmiz video'yu izleyebiliyoruz.Ama diyelim ki yaşımız 18'den küçük ve bazı korku gerilim videoları +18 sınır konulması gerekiyor,İşte burada yaş aralığını ölçebilmek için ilgili kullanıcıların yaş değerlerinin claim olarak atanması sağlanmalı ve claim bazlı bir yetkilendirme yapılmalıdır.
+
+52. Video: Mesajların 24 saatlik dilim içinde gönderilmiş ise ne kadar süre önce gönderildiği yazdırılacak.(?)
+
+54. Video: Yazar panelinde Purple logosu yerine kendi blogunuzun logosunu koyun.
+
+56. Video
+Ödev
+Selected = seçilen değeri getirir ekrana yansıtır
+örnek olarak (x.CategoryId = 2 ? true : false), x den gelen CategoryId eşitse ikiye true olucak yani seçili olarak ekrana yansısın
+
+Disabled = değeri pasif yapar yani seçim yaptırmaz
+kullanımı ise (x.CategoryId = 1 ? true : false), x den gelen CategoryId eşite bire true olucak yani gelen değeri bize seçtirmiyecek. Projeyi çalıştırdığımızda değeri gri tonda görücez ve üzerine geldiğimizde seçim yapamıyacağız.
+
+Group = adından da anlaşıldığı gibi gruplama işlemlerinde kullanılıyor.
+Örnek olarak 2 kategorimizin oldugunu dusunelim yazılım ve oyun. Yazılım ve Oyun başlıkları altında bloglar listeleniyor işlem tam olarak böyle oluyor. Başlıklar koyu olarak belirtilir.
+
+57. Video: Durum kısmında true yerine aktif false yerine pasif yazdırılacak.
+
+Ödev : Blog silme işlemi yapmadan önce bir tane pop-up yada mesaj açılsın ve gerçekten silmek istediğinizden emin misiniz ? Diye sorsun.
+
+63. Video: Col
+Bootstrap sisteminin sunmuş olduğu kolon(Izgara) sistemidir.  Sayfa normalde 12 eşit parçaya bölünür.  Bu parçalardan kaç tanesini kullanmak istiyorsanız ona göre değer girebilirsiniz.
+col-sm  |   col-md   |  col-lg   | col-xl   gibi ayrımları vardır. Bu sistemle beraber tüm cihazlarda nasıl görünmesini istiyorsanız o şekilde ayarlayabilirsiniz.
+Örneğin  class="col-xl-6 col-sm-12" dediğinizde yüksek çözünürlülüklü bilgisayar ekranında alanın yarısını alırken telefon veya tablet gibi cihazlarda alanın tamamını kaplar.
+
+68. Video : Writer template i için logo
+
+73. Video: GUID'in orjinal açılımı “Globally Unique IDentifier” dır. Türkçe kaynaklarda çevirisi “Genel Benzersiz Tanımlayıcı” olarak tanımlanmıştır. Burdaki olayı ekleyeceğimiz resim dosyası adının aynı resim olsa bile arka tarafta farklı isimlerle kaydedilmesini sağlar. Yani resim dosyalarımız karışmasın diye bize benzersiz dosya adları eklememizi sağlar.
+
+76. Video: Yazar'ın Bildirimler kısmında bütün bildirimler gözükmesin sadece durumu aktif olanlar gözüksün.
+
+79. Video: Bildirimlerin kaç saat vs önce olduğu gözükecek.
+
+80.Video IsRequired ve OnDelete ne anlama gelir.
+
+IsRequired : özelliği, ASP.NET MVC'deki veri doğrulama (validation) işlemleri için kullanılır. Bu özellik, belirtilen model özelliğinin (property) boş bırakılamayacağını ve dolayısıyla ilgili form elemanının değerinin doldurulması gerektiğini belirtir.
+
+OnDelete : OnDelete, Entity Framework (EF) ile birlikte kullanılan bir Fluent API öğesidir ve ilişkisel veritabanlarında birincil anahtar (primary key) ve dış anahtar (foreign key) arasındaki bağımlılık ilişkilerinde kullanılır.
+
+OnDelete, bir kayıt silindiğinde, ilişkili dış anahtar değerlerinin nasıl davranacağını belirlemek için kullanılır. Özellikle, EF'de varsayılan olarak, dış anahtar ile ilişkili kayıt silinirse, bu durumda, veritabanı motoru tarafından hata alınır.
+
+OnDelete özelliği, bu hata durumunu engellemek ve kaynak ve hedef arasındaki ilişkiyi uygun şekilde güncellemek için kullanılır. Bu özellik, önceden belirlenmiş davranışlar içerir ve kullanıcıya seçim yapma olanağı verir.
+
+.OnDelete(DeleteBehavior.ClientSetNull) : .OnDelete(DeleteBehavior.ClientSetNull) ifadesi, Entity Framework Core (EF Core) ile kullanılan Fluent API'deki bir özelliktir. Bu özellik, bir dış anahtar (foreign key) ile ilişkili bir anahtar kaydı (primary key record) silindiğinde, dış anahtarın null olarak ayarlanmasını sağlar.
+
+Bu davranış, birincil anahtarın silinmesi durumunda, dış anahtarın null değer almasını sağlayarak, bu kayıtla ilişkili diğer kayıtların korunmasını ve dış anahtarın null olmadığından emin olur.
+
+86.Video: Solidin ezilmemesi için context nasıl tutulmalı
+
+Bağımlılıkların tersine çevrilmesi prensibine uygun olarak, Context sınıfı tarafından kullanılan diğer nesneler için arayüzler kullanabilirsiniz. Böylece, Context sınıfı, uygulama kodundaki diğer sınıflara bağımlılık oluşturmadan nesnelerle iletişim kurabilir.
+
+İlkeye tek sorumluluk prensibi uygun olarak, Context sınıfının sadece bir işlevi olmalıdır. Bu nedenle, Context sınıfında, yalnızca sınıfın amacıyla ilgili yöntemler yer almalıdır. Başka bir deyişle, Context sınıfı, tek bir işlevi yerine getirmeli ve bu işlev için gereken her şeyi içermelidir.
+
+Açık kapalı prensibi uyarınca, Context sınıfı, uygulama kodunda değişiklik yapmadan nesnelerle iletişim kurabilmelidir. Bu, Context sınıfının uygulama koduna göre değiştirilemeyeceği anlamına gelir. Bunun yerine, uygulama kodundaki diğer nesnelerin Context sınıfına bağımlılıklarını tersine çevirerek bu prensibi sağlayabilirsiniz.
+
+87.Video: RenderBody ve RenderSection
+RenderBody : Master Page yapısı kurmamızı sağlar.
+RenderSection ise Layout sayfasının istediğimiz bir alanında veri göstermemizi sağlar. Ayrıca " RenderSection("parametre", required: false) " bu şekilde tamamladığımızda zorunluğunu iptal edebiliriz. Bu sayede tanımladığımız parametreye ait rendersection boş bile gelse sayfada hata almayız.
+
+Tam ayırtman özelliğini söylemek gerekirse RenderBody her sayfada kullanılıyorken RenderSection istediğimiz sayfalarda gösterebiliriz.
+
+120. Video: Veriyi apiye gönderirken serialize olarak göndeririz. Veriyi alırken deserialize yaparak alırız.
+
+124. Video Kullanım şartlarını okudum. seçiliyse giriş yapsın.
+Öncelikle modele public bool IsAcceptTheContract { get; set; } prop'unu ekledim.
+Sonra controller'in içine şu koşulu ekledim.
+if (!signUpViewModel.IsAcceptTheContract)
+            {
+                ModelState.AddModelError("IsAcceptTheContract",
+                    "Sayfamıza kayıt olabilmek için gizlilik sözleşmesini kabul etmeniz gerekmektedir.");
+                return View(signUpViewModel);
+            }
+View kısmındada bu prop'a karşılık gelecek checkbox'a asp-for ile atama yaptım.
+<div class="checkbox i-checks"><label> <input type="checkbox" asp-for="IsAcceptTheContract"><i></i>
+Kullanım şartlarını okudum kabul ediyorum. Kabul ediyorum </label></div>
+
+132. Video 
+
+ var username = User.Identity.Name;
+ var usermail = context.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
+ var writerID = context.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterID).FirstOrDefault();
+
+tek satırda yazılabilir mi? User.FindFirstValue(ClaimTypes.NameIdentifier)
+
+144. Video Role göre sidebar'da bazı yerleri göstermemek.

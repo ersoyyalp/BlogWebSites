@@ -1,0 +1,61 @@
+﻿@model List<Blog>
+
+@{
+    ViewData["Title"] = "BlogListByWriter";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Bloglarınız</h4>
+        <table class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th> # </th>
+                    <th> Blog Görseli </th>
+                    <th> Blog Başlığı </th>
+                    <th> Oluşturulma Tarihi </th>
+                    <th> Kategori </th>
+                    <th> Durumu </th>
+                    <th> Düzenle </th>
+                    <th> Sil </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.BlogID</td>
+                        <td class="py-1">
+                            <img src="@item.BlogImage" alt="image" />
+                        </td>
+                        <td> @item.BlogTitle </td>
+                        <td> @(((DateTime)item.BlogCreateDate).ToString("dd-MMM-yyyy")) </td>
+                        <td> @item.Category.CategoryName </td>
+                        @if (item.BlogStatus == true)
+                        {
+                            <td>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <div class="progress">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                        }
+                        <td> <a href="/Blog/EditBlog/@item.BlogID" class="btn btn-outline-info">Güncelle</a> </td>
+                        <td> <a href="/Blog/DeleteBlog/@item.BlogID" class="btn btn-outline-danger" onclick="return confirm('Silmek istediğine emin misin?');">Sil</a> </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a href="/Blog/AddBlog/" class="btn btn-outline-primary mt-3">Yeni Blog Oluştur!</a>
+    </div>
+</div>
+
+

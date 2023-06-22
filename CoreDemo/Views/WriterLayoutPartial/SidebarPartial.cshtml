@@ -1,0 +1,67 @@
+﻿<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+        <li class="nav-item nav-profile">
+            <a href="/Writer/WriterEditProfile" class="nav-link">
+                @await Component.InvokeAsync("WriterSidebar")
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Dashboard/Index/">
+                <span class="menu-title">Dashboard</span>
+                <i class="mdi mdi-home menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Writer/WriterProfile/">
+                <span class="menu-title">Profilim</span>
+                <i class="mdi mdi-account-box menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Blog/BlogListByWriter">
+                <span class="menu-title">Bloglarım</span>
+                <i class="mdi mdi-book-open-page-variant menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Blog/AddBlog/">
+                <span class="menu-title">Yeni Blog</span>
+                <i class="mdi mdi-pencil-box-outline menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Notification/AllNotification">
+                <span class="menu-title">Bildirimler</span>
+                <i class="mdi mdi-bell-ring menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-title">Mesajlar</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-message-text-outline menu-icon"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="/Message/InBox">Gelen Mesajlar</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="/Message/SendBox">Giden Mesajlar</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Writer/WriterEditProfile/">
+                <span class="menu-title">Ayarlar</span>
+                <i class="mdi mdi-settings menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item sidebar-actions">
+            <span class="nav-link">
+                <div class="border-bottom">
+                    <h6 class="font-weight-normal mb-3">Site İşlemleri</h6>
+                </div>
+                <a href="/Blog/Index/" target="_blank" class="btn btn-block btn-lg btn-gradient-primary mt-4">Siteye Git!</a>
+                <a href="/Login/Logout/" class="btn btn-block btn-lg btn-gradient-secondary mt-4">Çıkış Yap!</a>
+            </span>
+        </li>
+    </ul>
+</nav>

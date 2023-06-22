@@ -1,0 +1,2019 @@
+﻿# 1 Ders (Giriş)
+
+# 2 Ders (Başlamadan Önce Bilinmesi Gerekenler)
+-> 50 derste MVC
+-> 50 derste Tatil Projesi
+-> MVC Proje Kampı
+
+# 3 Ders (Yeni Proje Oluşturma)
+CoreDemo adlı Asp.Net 5.0 MVC projesini oluşturuyoruz.
+Ufak tefek default olarak gelen MVC ile tanıtım yapıldı.
+
+# 4 Ders (View Ve Layout)
+Bu derste HomeController'da ve bu controller'a bağlı bir View'de sistami daha iyi anlayabilmemiz için bir kaç kod yazdık.
+
+# 5 Ders (Katmanlı Mimariye Bakış Ve N Tier Architecture)
+*** Katmanlı Mimari ***
+- Kod tekrarını önleme ("DRY" Don't Repeat Yourself)
+- Projeye olan hakimiyet artar.
+- Kod okunaklığı artar.
+- Clean Code yapısı sağlanır.
+- Hata yönetimi kolaylaşır.
+
+*** N Tier Architecture ***
+-> Entitiy Layer
+	* Tablo ve sütunları oluşturduğumuz katmandır.
+
+-> DataAccess Layer
+	* CRUD operasyonlarının temelini oluşturcak yapıyı kullanıcaz.
+	* CRUD (CREAT-READ-UPDATE-DELETE)
+-> Business Layer
+	* Validasyonların yapıldıığı katmandır.
+-> Presentation Layer
+	* Sunum (UI) oluşturulduğu katmandır.
+-> Core Layer
+-> API
+
+# 6 Ders (Katmanların Oluşturulması)
+Solition üstüne sağ tık Add New Project deyip Class Library seçiyoruz ve sırayla şu katmanları dahil ediyoruz.
+-> EntityLayer
+-> DataAccessLayer
+-> BusinessLayer
+-> CoreLayer
+
+# 7 Ders (Entitylerin Oluşturulması Category - Blog)
+EntityLayer içine new folder Concrete ve içine class;
+-> Category (İçine propertyleri tanımlıyoruz.)
+-> Blog (İçine propertyleri tanımlıyoruz.)
+
+# 8 Ders (Entitylerin Oluşturulması Writer - Comment - About - Contact)
+Entity/Concrete içine;
+-> Writer (İçine propertyleri tanımlıyoruz.)
+-> Comment (İçine propertyleri tanımlıyoruz.)
+-> Contact (İçine propertyleri tanımlıyoruz.)
+-> About (İçine propertyleri tanımlıyoruz.)
+
+# 9 Ders (Entity Framework Core Paketleri)
+İlk olarak tüm entitylere [Key] ettiribütünü yazdık. Daha sonra DataAccessLayer içine;
+-> Microsoft.EntityFrameworkCore (5.0.9)
+-> Microsoft.EntityFrameworkCore.Design (5.0.9)
+-> Microsoft.EntityFrameworkCore.SqlServer (5.0.9)
+-> Microsoft.EntityFrameworkCore.Tools (5.0.9)
+paketlerini yüklüyoruz.
+
+Ardında bu katmana Abstract, Concrete ve Repositories klasörünü ekliyoruz. Ardından Concrete içine Context classını ekliyoruz.
+
+# 10 Ders (Connection String Ve Context Sınıfı)
+Bu derste açtığımız Context sınıfının içine Database'miz olacak CoreBlogDB adlı database oluşturmak için kodlarımızı yazdık.
+
+# 11 Ders (Referansların Tanımlanması Ve Context Dbset Propertyleri)
+Referans verme işlemi için(Katmana sağ tık Add - Project Referance); 
+EntityLayer --> Referans tanımlanmayacak.
+DataAccessLayer --> EntityLayer
+BusinessLayer --> EntityLayer + DataAccessLayer
+PresentationLayer --> EntityLayer + DataAccessLayer + BusinessLayer
+
+Referans verme işlemi ardından Context içine tablolarımı Dbset ile tanımladık.
+
+# 12 Ders (Migration İşlemleri)
+Migration işlemi yapabilmek için öncelikle PresentationLayer'a 
+-> Microsoft.EntityFrameworkCore (5.0.9)
+-> Microsoft.EntityFrameworkCore.Design (5.0.9)
+-> Microsoft.EntityFrameworkCore.SqlServer (5.0.9)
+-> Microsoft.EntityFrameworkCore.Tools (5.0.9)
+paketlerini yüklüyoruz.
+
+Ardından Package Manager Console'da add-migration ve update-database yaparak ilk migration'unumuzu oluşturuyoruz.
+
+# 13 Ders (İlişkilerin Eklenmesi Add Migration İşlemleri)
+Bu derste ilk olarak Blog ve Category tablolarını birbirleri ile ilşkilendirdik. Ardından Comment ve Blog arasındaki ilişkiyi oluşturduk.
+
+# 14 Ders (Interfacelerin Tanımlanması)
+- Her bir CRUD operasyonuna ait metot tanımlanacak.
+- Metotların imzası olarak interfaceler kullanılacak.
+- Abstract üzerinde soyut ifade olarak interfaceleri tanımlar.
+- Concrete üzerinde somut ifade olarak bu interfaceler içinde yer alan metotların içini doldur.
+
+Generic -> Bütününe uygulanacak.
+Ekleme-Silme-Güncelleme -> Void
+
+Bu derste DataAccesLayer içindeki Abstract klasörü içine IBlogDal ve ICategoryDal interfacelerini ekledik.
+
+# 15 Ders (Repositorylerin Yazılması)
+Bu derste DataAccesLayer içindeki Repositories içine CategoryRepository ve BlogRepository classlarını ekledik.
+
+# 16 Ders (Generic Repository)
+Bu derste ilk olarak DataAccesLayer içindeki Abstract klasörü içine new interface IGenericDal ekliyoruz ve ardından Repositories klasörü içine GenericRepository classını ekleyip dolduruyoruz.
+
+# 17 Ders (Business Katmanı Service ve Managerların Yazılması)
+BusinessLayer içine Abstract, Concrete ve ValidationRules klasörlerini ekledik ve ardından Abstact klasörü içine new interface ICategoryService ekliyoruz. Daha sonra Concrete içine CategorManager classını ekliyoruz ve implemente ediyoruz. Bu oluşum DRY kod ama öğrenme açısından böyle başladık düzelticez.
+
+# 18 Ders (Business Katmanı Hatalı Validasyonlar)
+Bu derste bir takım konu anlatımları dışında DataAccessLayer içine new folder EntityFramework ekliyoruz.
+
+# 19 Ders (Entity Framework Repository)
+Bu derste öncelikler DataAccessLayer içindeki Abstract taki interface'leri IGenericDal'dan miras aldırdık. Devamında
+IAboutDal, ICommentDal, IContactDal ve IWriterDal interfaceleri oluşturup miras aldırdık.
+Daha sonra EntityFramework klasörü içine new class 
+-> EfAboutRepository
+-> EfBlogRepository
+-> EfCategoryRepository
+-> EfCommentRepository
+-> EfContactRepository
+-> EfWriterRepository
+ekliyoruz ve gerekli düzenlemeleri yapıyoruz.
+
+# 20 Ders (Category Manager Sınıfında Revizeler Sertifika Görev 1)
+Bu derste ilk olarak CategoryManager'ın içini dolduruyoruz. Ardından Presentation katmanına CategoryController ekliyoruz ve sqlde Categories tablosuna bir kaç veri girişi yapıyoruz.
+
+# 21 Ders (Kategorilerin Listelenmesi)
+Bu derste CategoryManager'ı olması gerektiği hale getirdikten sonra CategoryController'da Index'in controllerını yazdıktan sonra View ekliyoruz Razor view olarak ve tablo yapısıyla kategorilerin geldiğini görüyoruz.
+
+# 22 Ders (Temanın Projeye Eklenmesi)
+21. derste indirdiğimiz temayı layoutlaştırmak için öncelikle _UserLayout adlı viewi Shared dosyasının içine açıyoruz. Ardından çalışıyor mu diye BlogController'ı dahil ediyoruz projeye sorunsuz çalıştığınız görüyoruz.
+Ardından templateden aldığımız index ile _UserLayout'u ayarladık.
+
+# 23 Ders (Partial View Await Async)
+Bu derste _UserLayout'u partiallara ayrıdık. Hocadan farklı bir yol izledim. İlk olarak Views klasörü içine UserLayoutPartial adlı bir klasör içine de ;
+-> HeadPartial
+-> LogoPartial
+-> TopbarPartial
+-> SocialMediaPartial
+-> NavbarPartial
+-> FooterPartial
+viewlerini Partial olarak açıp _UserLayout'ta
+
+@await Html.PartialAsync("/Views/UserLayoutPartial/HeadPartial.cshtml")
+
+kodu ile partialları çağırdık.
+
+# 24 Ders (Blogların Listelenmesi)
+Bu derste ilk olarak BusinessLayerda Abstract içine IBlogService ardından Concrete içine BlogManager'ı dahil edip ardından BlogController'a ait index'e templateden aldığımız blog kısmını ekleyip foreach döngüsüne sokuyoruz. Bir kaç blog ekledikten sonra blogların geldiğini gördük.
+
+# 25 Ders (Include Metodu Ve Eager Load)
+Bloglarda CategoryName'i getirebilmek için IBlodDal'da
+
+List<Blog> GetListWithCategory();
+
+ardından EfBlogRepository'de
+
+public List<Blog> GetListWithCategory()
+        {
+            using (var c = new Context())
+            {
+                return c.Blogs.Include(x => x.Category).ToList();
+            }
+        }
+
+kodlarını yazıp Repositories'te oluşturulan GenericRepository hariç diğer tüm classlari sildik.
+
+Daha sonra BusinessLayer/Abstract içindeki IBlogService'e
+
+List<Blog> GetBlogListWithCategory();
+
+ve Concrete içindeki BlogManager'de
+
+public List<Blog> GetBlogListWithCategory()
+        {
+            return _blogDal.GetListWithCategory();
+        }
+
+kodlarını ekledik.
+
+# 26 Ders (Read More Ve Tarih Formatı)
+Kısa Format Tarih : @(((DateTime)item.xxx).ToString("dd-MMM-yyyy"))
+Kısa Format Metin : @item.xxx.Substring(0,item.xxx.Substring(0,130).LastIndexOf(" "))...
+Blogların listelendiği kısımda bu kodları kullanarak görsel anlamda güzelleştirme yaptık.
+
+# 27 Ders (Blog Detayları)
+BlogController'a BlogDetails Controllerını yazıp index ekledik be single.htmlden istediğimiz kısmı alıp düzenledik.
+Daha sonra şartı sorgular için IGenericDal'a
+
+List<T> GetListAll(Expression<Func<T, bool>> filter);
+
+yazıyoruz ve ardından GenericRepository içine
+
+public List<T> GetListAll(Expression<Func<T, bool>> filter)
+        {
+            using var c = new Context();
+            return c.Set<T>().Where(filter).ToList();
+        }
+
+ve Business katmanında Concrete içindeki BlogManager'a
+
+public List<Blog> GetBlogByID(int id)
+        {
+            return _blogDal.GetListAll(x => x.BlogID == id);
+        }
+
+kodunu yazdık ve dersi bitirdik.
+
+# 28 Ders (Blog Devamını Oku Sayfası)
+Controller'ın adını BlogReadAll olarak değiştiriyoruz ve işlemleri bu değişikliğe göre uyarlıyoruz. Ardından ID'ye göre bilgileri çekiyoruz ve bu çekimi görsel olarak düzeltiyoruz.
+Daha sonra CommentController açıyoruz ve içine oluşturduğum 2 parça controller'a ait partial view açıp bu kodları kesip partialviewlere yapıştırıp düzenliyoruz.
+
+# 29 Ders (Yorumlara Ait Metotların Yazılması)
+Business katmanına ICommentService ve CommentManager ı projeye dahil edip CommentController'da yazıp partial'da verileri çekiyoruz. Hata altın partialda IEnumarable kullandığımız için onu bir sonraki derste düzelteceğiz.
+
+# 30 Ders (View Component)
+Bu derste ilk olarak ViewComponents adlı klasörü UI katmanına ekliyoruz ve içine CommentList classını ekleyip ardından Shared içine Components klasörünü imine CommentList klasörünü içinede Default viewini partial olarak ekliyoruz. Ardından statik olarak gelmesi için model oluşturduk ve IEnumarable ile geldiğini gördük.
+
+# 31 Ders (Bloglara Ait Yorumların Listelenmesi)
+Bu derste ilk olarak ViewComponents içine Comment adlı klasörü içine CommentListByBlog adlı classı ekledik ardından Components içine CommentListByBlog adlı klasörü içinede Default adlı viewi ekleyip daha önce yazdığımız PartialCommentList'deki kodları kopyalayıp düzenledik ve sorunsuz bir şekilde geldiğini gördük ve dersi bitirdik.
+
+# 32 Ders (View Component İle Parametre Kullanımı)
+Bu derste ilk olarak idye göre yorum getirme işlemi için
+
+public IViewComponentResult Invoke(int id)
+        {
+            var values = cm.GetList(id);
+            return View(values);
+        }
+
+olarak id kısmını güncelledik devamında id nin gelmediğini gördük. Ardından
+
+@await Component.InvokeAsync("CommentListByBlog",new {id= ViewBag.ID})
+
+ile ID gönderdik ve oldu. Eğer yorum yoksa yorum yapın ödevinide tamamladım.
+Ardından BlogReadAll'da Component yapısıyla Kategorileri getirdik. Ardından bir takım görsel iyileştirmeler yaptık.
+
+# 33 Ders (Httpget Ve Httppost Attributeleri Ve Register İşlemi)
+Bu derste register işlemi için LoginController açtık ve içine SingUp cantrollerını yazıp view ekledik ardından templateden istediğimiz yeri kopyalayıp bu view'e yapıştırdık. Devamından Business katmanına IWriterService ve WriterManager'ı dahil edip controller tarafında
+
+[HttpGet]
+        public IActionResult SingUp()
+        {
+            return View();
+        }
+
+[HttpPost]
+        public IActionResult SingUp(Writer writer)
+        {
+            return View();
+        }
+
+kodlarını yazıp dersi bitirdik.
+
+# 34 Ders (Yazar Kaydı Ve Sweet Alert Kullanımı)
+Bu derste ilk olarak yazar kaydı için
+
+[HttpPost]
+        public IActionResult SingUp(Writer writer)
+        {
+            writer.WriterStatus = true;
+            writer.WriterAbout = "Deneme";
+            if (writer.WriterPassword == writer.WriterConfirmPassword)
+            {
+                wm.WriterAdd(writer);
+                return RedirectToAction("Index", "Blog");
+            }
+            return View();
+        }
+
+controller'ını yazıyoruz ve bu şekilde kaydın gerçekleştiğini gördük. Ardından tüm şartları okudum, kabul ediyorum kısmı için sweet alert kullandık.
+
+# 35 Ders (Fluent Validation Core)
+Busines katmanı ve Uı katmanına
+-> FluentValidation (10.3.3)
+-> FluentValidation.AspNetCore (10.3.3)
+paketlerini yüklüyoruz.
+
+BusinessLayer'daki ValidationRules klasörü içine new class WriterValidator açıp kurallarımızı yazıyoruz. Ardından bu kuralların geçerli olması için önce LoginController'da ardından SignUp'da gerekli kodları yazıyoruz. Ardından dersi bitirdik.
+
+# 36 Ders (Login Panelinin Hazırlanması, View Sayfasında Class Atamaları)
+Bu derste ilk olarak Validation rule yazılarını kırmızı olarak getirdik. Ardında LoginControllerda signin için bir controller yazarak SignIn sayfasını yaptık ve türkçeleştirdik.
+
+# 37 Ders (Yazarın Diğer Yazıları Ve Yazar Blog İlişkisi)
+Bu derste ilk olarak yazara göre blog getirebilmek için blog ile writer tablolarını bağlıyoruz.
+Ardından BlogManager'da
+
+public List<Blog> GetBlogListByWriter(int id)
+        {
+            return _blogDal.GetListAll(x => x.WriterID == id);
+        }
+
+kodunu yazıyoruz.
+Ardından yazarın son blogları için WriterLastBlog adlı komponenti oluşturup verileri düzeltip dersi bitirdik.
+
+# 38 Ders (Mail Bülteni)
+Bu derste ilk olarak mail bülteni için NewsLetter clasını EntityLayer'a ekliyoruz. Buna bağlı olarak DataAccessLayerda ve BusinessLayer'da clat ve interfacelerimizi ekleyip oluşturduğumuz NewsLetterController'ına partial controller ekleyip View açıyoruz ardından bu view'e gerekli kısmı kesip kodunu yazıp çalıştığını görüyoruz ve dersi bitiriyoruz.
+
+# 39 Ders (Mail Bültenine Abone Olma Ve Bloglara Yorum Yapma)
+Bu derste ilk olarak mail adresinin sql adresine kayıt olması için controller ve view tarafında gerekli kodları yazıyoruz. 
+Ardından daha önce oluşturmuş olduğumuz CommentController da
+
+[HttpPost]
+        public IActionResult PartialAddComment(Comment comment)
+        {
+            comment.CommentDate = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+            comment.CommentStatus = true;
+
+            cm.CommentAdd(comment);
+
+            return RedirectToAction("BlogReadAll", "Blog", new { id = comment.BlogID });
+        }
+
+kısmını güncelleyerek
+
+@await Html.PartialAsync("~/Views/Comment/PartialAddComment.cshtml",new { id = ViewBag.ID }) 
+
+ile ID gönderip
+
+<div class="comment-top">
+    <h4>Bir Yorum Bırakın.</h4>
+    <div class="comment-bottom">
+        <form method="post" asp-action="PartialAddComment" asp-controller="Comment">
+            <input type="hidden" name="BlogID" value="@ViewBag.ID" />
+            <input class="form-control" type="text" name="CommentUserName" placeholder="İsim Soyisim" required="">
+            <input class="form-control" type="email" name="Email" placeholder="E-Posta" required="">
+
+            <input class="form-control" type="text" name="CommentTitle" placeholder="Konu" required="">
+
+            <textarea class="form-control" name="CommentContent" placeholder="Yorumunuz..." required=""></textarea>
+
+            <button type="submit" class="btn btn-primary submit">Gönder</button>
+        </form>
+    </div>
+</div>
+
+ile yorum yaptırma kısmını tamamladık.
+
+# 40 Ders (Status Code Ve 404 Sayfası)
+//app.UseStatusCodePages();
+app.UseStatusCodePagesWithReExecute("/ErrorPage/Error1", "?code={0}");
+
+kodunu ekleyerek ErrorPageController'ı açıp istediğimiz bir tamplete View yazıp dersi bitirdik.
+
+# 41 Ders (About İşlemleri)
+Bu derste ilk olarak AboutController açıp BusinessKatmanına IAboutService ve AboutManagerı dahil edip devamında controllera index ekledik. Daha sonra bu indexe templateden istediğimiz kısmı kopyaladık ve sqle veri girdikten sonra verileri çektik.
+
+# 42 Ders (Contact Sayfası)
+Contact sayfası için öncelikle ContactController'ı ardından IContactService ve ContactManager'ı busines katmanına dahil ediyoruz. Devamında Contact controller'da yazdığımız HttpGet ve HttpPost için View ekleyip Templateden gerekli kısmı kendimiz için alıp form kısmında name'leri tabloya uygun doldurum verilerin geldiğini görünce dersi bitriyoruz.
+
+# 43 Ders (Vitrinde Revizeler)
+Navbar linkleri verildi
+Topbar linkleri verildi
+Footer türkçeleştirmesi yapıldı.
+
+# 44 Ders (Authentication Ve Controller Seviyesinde Authorize)
+Authorize:Yetkilendirme alanları. Giriş yapmamış kişileri engelleme için kullanılan ettiribüttür. [Authorize] ile safyayı kitliyoruz.
+
+WriterController adlı bir controller açtık eğer bu Authorize adlı kodu sadece controllerın üstüne yazarsak o controller çalışmaz otantike olmadan. Ama namespace nin bir altına yazarsak hepsi kitlenir.
+
+# 45 Ders (Proje Seviyesinde Authorize Ve Startup.Cs Configure Service)
+
+Bu derste ilk olarak startup'ta
+
+services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
+
+kodu ile proje seviyesin Authorize yazmış olduk.
+Ardından bu giriş işleminin etkisin olması için istenilen controllera [AllowAnonymous] kodunu yazıyoruz.
+
+# 46 Ders (Session İle Oturum Yönetimi)
+Bu derste öncelikle SignIn safyasının httpget ve post kısım larını 
+
+[HttpGet]
+        public IActionResult SignIn()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SignIn(Writer writer)
+        {
+            Context context = new Context();
+            var dataValue = context.Writers.FirstOrDefault(x => x.WriterMail == writer.WriterMail && x.WriterPassword == writer.WriterPassword);
+
+            if (dataValue != null)
+            {
+                HttpContext.Session.SetString("username", writer.WriterMail);
+                return RedirectToAction("Index", "Writer");
+            }
+
+            else
+            {
+                return View();
+            }
+        }
+
+olarak yazıp ardından startup'a
+
+services.AddSession();
+app.UseSession();
+
+kodlarını yazdık devamında giriş yaptık ama hata sayfası geldi.
+
+# 47 Ders (Authorize ile Return Login Url)
+startup'ta aşağıdaki kodlarla artık hata yerine Login sayfasına yönlendirecek.
+
+ app.UseAuthentication();
+
+
+ services.AddMvc();
+            services.AddAuthentication(
+                CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(x =>
+                {
+                    x.LoginPath = "/Login/SignIn/";
+                });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie Settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+                options.LoginPath = "/Login/SignIn/";
+                options.SlidingExpiration = true;
+            });
+
+# 48 Ders (Login İşlemi)
+Bu derste startupta
+
+ app.UseAuthentication();
+
+kodunu yazdıktan sonra LoginController'ı
+
+ [HttpPost]
+        public async Task<IActionResult> SignIn(Writer writer)
+        {
+            Context context = new Context();
+            var datavalue = context.Writers.FirstOrDefault(x => x.WriterMail == writer.WriterMail && x.WriterPassword == writer.WriterPassword);
+
+            if (datavalue != null)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name,writer.WriterMail)
+                };
+
+                var useridentity = new ClaimsIdentity(claims, "a");
+                ClaimsPrincipal principal = new ClaimsPrincipal(useridentity);
+                await HttpContext.SignInAsync(principal);
+                return RedirectToAction("Index", "Blog");
+            }
+
+            else
+            {
+                return View();
+            }
+        }
+
+bu şekilde güncelledik ve ardından otantike olduk artık her sayfaya gidebiliyoruz.
+Startupdta services.AddSession(); kodunu kaldırdık.
+
+# 49 Ders (Footer Last 3 Post)
+Bu derste öncelikle BusinessLayerDa BlogManager'a
+
+public List<Blog> GetLast3Blog()
+        {
+            return _blogDal.GetListAll().Take(3).ToList();
+        }
+
+kodunu yazıp ardından ViewComponents/Blog içine BlogLast3Post classını dahil edip component yapısını kuruyoruz ardından Component klasörüne partial viewi ekledikten sonra gerekli yeri kesip uzantısını veriyoruz. Daha sonra son 3 postun geldiğini görüyoruz bu şekilde.
+
+# 50 Ders (Yazar Paneli Tema Dosyası)
+Bu derste hocanın paylaşmış olduğu writer template'i indirdik ve WriterControllerDa test adlı kısmı yazdıktan sonra Shared klasöü içine _WriterLayout adlı viewi ekledik. Devamında Test adlı controllera view ekleyip layoutunu oluşturduğumuz writerlayout seçtik. Devamında templateden aldığımız kısmın kalıcı olmasını istediğimiz kısmını bu layoutta bırakıp diğer kısımları sildik ve dersi bitirdik.
+
+# 51 Ders (Yazar Navbar Düzenlemeleri)
+Bu derste WriterLayoutPArtial adlı controllerı açıp writerlayoutu için  Head, sidebar ve footer için partial oluşturduk. 
+
+# 52 Ders (Yazar Üst Menü View Components)
+Bu derste writer layout için mesaj ve bilgirim kısmına componentleme yaptık.
+
+# 53 Ders (Refactoring Ve Generic Service Yapıları)
+Bu derste Business katmanı abstract klasörüne IGenericService'i dahil edip diğer service'leri kalıtım yoluyla miras bırakıp Manager tarafında da implement ediyoruz. Bu diğer tüm tablolar için yapıp isimden dolayı hata veren yerlri düzeltiyoruz.
+
+# 54 Ders (Yazarın Kendine Ait Blog Listesi)
+Bu derste blogcontroller'a yazdığımız BlogListByWriter adlı kontroller'a layoutu WriteLayout olan bir view ekleyip içine templateden aldığım tablo yapısını kuruyoruz. Verilerin geldiğini görüp dersi bitiriyoruz.
+
+# 55 Ders (Yazarın Yeni Blog Eklemesi)
+Bu derste ilk olarak Blog Contoller içine BlogAdd adlı controller'ı oluşturuyoruz ardından içine Blog için Validation kurallarını yazıyoruz.
+
+[HttpGet]
+        public IActionResult BlogAdd()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult BlogAdd(Blog blog)
+        {
+            BlogValidator bv = new BlogValidator();
+            ValidationResult results = bv.Validate(blog);
+
+            if (results.IsValid)
+            {
+                blog.BlogStatus = true;
+                blog.BlogCreatDate = DateTime.Parse(DateTime.Now.ToString());
+                blog.WriterID = 1;
+
+                bm.TAdd(blog);
+                return RedirectToAction("BlogListByWriter", "Blog");
+            }
+
+            else
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
+
+            return View();
+        }
+
+controller'ı bu şekilde yazdıktan sonra View ekleyip form yapısını kuruyoruz. asp-for ile kimin için olduğunu söyleyip verileri kaydettirdik.
+
+# 56 Ders (Blog Ekleme İşleminde Kategorilerin Dropdown Aracından Çekilmesi)
+Çok çok çok öenmli bir ders öncelikle BlogController'da
+
+[HttpGet]
+        public IActionResult BlogAdd()
+        {
+            CategoryManager cm = new CategoryManager(new EfCategoryRepository());
+            List<SelectListItem> categoryvalues = (from x in cm.GetList()
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = x.CategoryName,
+                                                       Value = x.CategoryID.ToString()
+                                                   }).ToList();
+            ViewBag.cv = categoryvalues;
+
+            return View();
+        }
+
+kısmını güncelliyoruz ardından html tarafını
+
+<div class="form-group">
+                        <label>Kategori</label>
+                        @Html.DropDownListFor(x=>x.CategoryID,(List<SelectListItem>)ViewBag.cv,new {@class="form-control"})
+                    </div>
+
+olarak güncelliyoruz ve ardın kategori adına göre seçim yapıp ekleme yapıyoruz.
+
+# 57 Ders (Bloglarda Kategori Adının Listelenmesi EfBlogRepository Revizeleri)
+Bu derste yazara ait blogları getirirken categoryname gelmediği için 
+
+IBlogDal'da -> List<Blog> GetListWithCategoryByWriter(int id);
+EfBlogRepository'de ->  public List<Blog> GetListWithCategoryByWriter(int id)
+                              {
+                                  using (var c = new Context())
+                                  {
+                                       return c.Blogs.Include(x => x.Category).Where(x => x.WriterID == id).ToList();
+                                  }
+                              }
+
+BlogManager'da ->  public List<Blog> GetListWithCategoryByWriterBM(int id)
+                       {
+                           return _blogDal.GetListWithCategoryByWriter(id);
+
+                       }
+
+güncellemelerini yapıp BlogController'da
+public IActionResult BlogListByWriter()
+        {
+            var values = bm.GetListWithCategoryByWriterBM(1);
+            return View(values);
+        }
+yazıp verinin istediğimiz gibi geldiğini gördük.
+
+# 58 Ders (Blog Silme)
+Silme işlemi için BlogController'a
+
+ public IActionResult DeleteBlog(int id)
+        {
+            var blogvalue = bm.TGetById(id);
+            bm.TDelete(blogvalue);
+            return RedirectToAction("BlogListByWriter", "Blog");
+        }
+
+ardından indexinde link verip dersi tamamladık.
+
+# 59 Ders (Düzenlenecek Bloga Ait Verilerin Getirilmesi)
+Bu derste ilk olarak BlogController'da EditBlog için
+
+[HttpGet]
+        public IActionResult EditBlog(int id)
+        {
+            var blogvalue = bm.TGetById(id);
+
+            CategoryManager cm = new CategoryManager(new EfCategoryRepository());
+            List<SelectListItem> categoryvalues = (from x in cm.GetList()
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = x.CategoryName,
+                                                       Value = x.CategoryID.ToString()
+                                                   }).ToList();
+            ViewBag.cv = categoryvalues;
+            return View(blogvalue);
+        }
+
+        [HttpPost]
+        public IActionResult EditBlog(Blog blog)
+        {
+            return View();
+        }
+
+kodlarını yazıp EditBlog Viewini AddBlogtan kopyalayıp yapıştırdığımızda seçtiğimiz satırın bilgilerinin geldiğini gördük.
+
+# 60 Ders (Blogların Güncellenmesi)
+Bu derste güncelleme işlemini tamamlamak için
+[HttpPost]
+        public IActionResult EditBlog(Blog blog)
+        {
+            blog.BlogCreatDate = DateTime.Parse(DateTime.Now.ToString());
+            blog.BlogStatus = true;
+            bm.TUpdate(blog);
+            return RedirectToAction("BlogListByWriter", "Blog");
+        }
+
+kodunu yazdıktan sonra ViewTarafında WriterID ve BlogID yi hidden olarak belirtiyoruz.
+
+# 61 Ders (Yazar İçin Dashboard Hazırlığı)
+Bu derste dashboard'ı kendi templateimize uygun hale getirdik.
+
+# 62 Ders (DashBoard Düzenlemeleri 1)
+Bu derse ilk olarak Dashboard'u türkleştirmekle başlıyoruz ardından burdaki tabloyu kullanabilmek adına BlogListDashboard adlı component yapısını kurup tablo yapısını kullandık.
+
+# 63 Ders (Dashboard Düzenlemeleri 2)
+Bu derste Dashboardu düzenlemeye CategoryListDashboard için component yapısı kurararak devam ettik.
+
+# 64 Ders (Trigger Kullanımı)
+Create Trigger TestArttir
+On Table_2
+After Insert
+As
+Update Table_1 Set Toplam = Toplam+1
+
+Create Trigger TestAzalt
+On Table_2
+After Delete
+As
+Update Table_1 Set Toplam =Toplam-1
+
+yazımı ile trigger kulanımını öğrendik.
+
+# 65 Ders (Parametreli Trigger Kullanımı)
+Create Trigger PuanArttir
+On Table_3
+After Insert
+As
+Declare @p int
+Declare @k int
+Select @p=Table_2.P,@k=Kategory from inserted
+Update Table_2 Set Puan=Puan+@p where ID=@k
+
+sorgusu ile parametreli olarak öğrendik.
+
+# 66 Ders (Blog Reyting Tablosu)
+Bu derste ilk olarak comment tablosuna BlogScore adlı satırı ekleyip migration ekliyoruz.
+Ardından BlogRayting tablosunu EntityLAyer'a dahil edip dersi bitirdik.
+
+# 67 Ders (Yorumlar Tablosunda Tetikleyicilerin Tanımlanması)
+Bu derste öncelikle aşağıdaki sorguyu yazarak Blog eklendiğinde reyting tablosuna eklettirdik.
+Create Trigger AddBlogInRaytingTable
+On Blogs
+After Insert
+As
+Declare @ID int
+Select @ID=BlogID from inserted
+Insert Into BlogRaytings (BlogID,BlogTotalScore,BlogRaytingCount)
+Values (@ID,0,0)
+
+Devamında aşağıdaki sorguyu yazarak toplam puan ve oy sayısını reyting tablosuna eklettirdik.
+Create Trigger AddScoreInComment
+On Comments
+After Insert
+As
+Declare @ID int
+Declare @Score int
+Declare @RaytingCount int
+Select @ID=BlogID,@Score=BlogScore from inserted
+Update BlogRaytings Set BlogTotalScore=BlogTotalScore+@Score, BlogRaytingCount+=1
+Where BlogID=@ID
+
+# 68 Ders (Dashboard Düzenlemeleri 3)
+Bu derste ilk olarak WriterAboutOnDashboard için component yapısı kuruyoruz.
+
+ardından kişiye ait bilgileri getirebilmek için BusinessLayer'da aşağıdaki kodu ekledik.
+
+public List<Writer> GetWriterByID(int id)
+        {
+            return _writerDal.GetListAll(x => x.WriterID == id);
+        }
+
+# 69 Ders (Dashboard Düzenlemeleri 4)
+Bu derste WriterAboutOnDashboard'yi düzenleyerek kendimize uygun hale getiriyoruz. Devamında bu kısmın içeriğini düzenledik.
+
+# 70 Ders (Dashboard İstatistikleri)
+Bu derste Writer dashboard ın istatistiksel bilgilerini çekmek için DashBoardController'da ViewBaglerle işlem yaptık.
+
+# 71 Ders (Yazar Profil Bilgilerini Listeleme)
+Bu derste ilk olarak WriterController'a
+
+public IActionResult WriterEditProfile()
+        {
+            var writervalues = wm.TGetById(1);
+            return View(writervalues);
+        }
+
+güncellemesini yaparak View ekliyoruz ve bu viewde form yapısını kurduktan sonra verilerin geldiğini görüyoruz.
+
+# 72 Ders (Yazar Bilgilerinin Güncellenmesi)
+Bu derste HttpPost kısmı il bir önceki dersi tam anlamıyla tamamlamış olduk.
+
+# 73 Ders (Profil Fotoğrafını Dosyadan Yükleme) (Önemli)
+Bu derste ilk olarak AddProfileImage adlı modeli oluşturup içini Writer entitsinden alıp koyalıyoruz. Devamında WriterController'da
+
+[HttpGet]
+        public IActionResult WriterAdd()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult WriterAdd(AddProfileImage p)
+        {
+            Writer writer = new Writer();
+
+            if (p.WriterImage != null)
+            {
+                var extension = Path.GetExtension(p.WriterImage.FileName);
+                var newimagename = Guid.NewGuid() + extension;
+                var location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFile/", newimagename);
+                var stream = new FileStream(location, FileMode.Create);
+                p.WriterImage.CopyTo(stream);
+                writer.WriterImage = "/WriterImageFile/" + newimagename;
+            }
+
+            writer.WriterName = p.WriterName;
+            writer.WriterAbout = p.WriterAbout;
+            writer.WriterMail = p.WriterMail;
+            writer.WriterPassword = p.WriterPassword;
+            writer.WriterConfirmPassword = p.WriterConfirmPassword;
+            writer.WriterStatus = true;
+
+            wm.TAdd(writer);
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+güncellemesini yapıp View ekliyoruz bu view'i EditWriter'dan alıyoruz. Using olarak model verip ekleme işleminin başarılı bir şekilde geldiğini görüyoruz.
+
+# 74 Ders (Notification Sınıfı)
+Bu derste bildirimler için Notification Entitisini ekliyoruz ve context'e de tanımladıktan sonra migration yapıyoruz. Ardından DataAccessLayer ve BusinessLayer'a bu sınıfa ait interface ve sınıfları dahil edip dersi bitiriyoruz.
+
+# 75 Ders (Bildirimlerin Listelenmesi)
+Bu derste bildirimlerle ilgili olarak WriterLayout/WriterNotification için component yapısını zaten kurmuştuk bu kısımlarla ilgilenip verileri alıp dersi bitirdik.
+
+# 76 Ders (Bildirim İşlemlerinin Tamamlanması)
+Bu derste öncelikle Notification tablosuna veriler girip iconları ve renkleri ile getirdik devamında Sidebar'a link verdik ve ekstra olarak logo ile ilgilendim.
+
+# 77 Ders (Mesaj Sınıfı)
+Bu derste Message entitisini projeye dahil edip buna bağlı olarak business ve Dataaccess te gerekli interface ve sınıfları ekliyoruz. Ardından IMessageServicede
+
+        List<Message> GetInboxListByWriter(string p);
+
+devamında
+
+public List<Message> GetInboxListByWriter(string p)
+        {
+            return _messageDal.GetListAll(x => x.Receiver == p);
+        }
+
+ile implement edip dersi bitiriyoruz.
+
+# 78 Ders (Mesaj Bildirimlerinin Tamamlanması)
+Bu derste daha önce oluşturmuş olduğumuz WriterMessageNotification Componenti
+
+ MessageManager mm = new MessageManager(new EfMessageRepository());
+
+        public IViewComponentResult Invoke()
+        {
+            string p;
+            p = "efruncetkin@gmail.com";
+            var values = mm.GetInboxListByWriter(p);
+            return View(values);
+        }
+
+yazarak Default'u foreach ile döngüyü sokarak dersi bitirdik.
+
+# 79 Ders (Bildirimlerin Listelenmesi)
+Bu derste ilk olarak tüm bildirimeri görebilmek için NotificationController açıyoruz ve view ekliyoruz bu viewdeki ödev için
+
+@foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td> @item.NotificationID </td>
+                                    <td>
+                                        <div class="preview-thumbnail text-center">
+                                            <div class="@item.NotificationTypeColor">
+                                                <i class="@item.NotificationTypeSymbol"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td> @item.NotificationType </td>
+                                    <td> @item.NotificationDetails </td>
+
+                                    @{
+                                        DateTime simdi = DateTime.Now;
+                                        
+                                        TimeSpan fark = simdi.Subtract(item.NotificationDate);
+                                        long saniye = (long)fark.TotalSeconds;
+
+                                        TimeSpan zaman = TimeSpan.FromSeconds(saniye);
+
+                                        int gun = zaman.Days;
+                                        int saat = zaman.Hours;
+                                        int dakika = zaman.Minutes;
+                                        int kalanSaniye = zaman.Seconds;
+                                    }
+
+                                    @if (gun != 0)
+                                    {
+                                        <td>
+                                            @gun gün @saat saat @dakika dakika @kalanSaniye saniye önce
+                                        </td>
+                                    }
+                                    else if (gun == 0 && saat != 0)
+                                    {
+                                        <td>
+                                            @saat saat @dakika dakika @kalanSaniye saniye önce
+                                        </td>
+                                    }
+                                    else if (gun == 0 && saat == 0 && dakika != 0)
+                                    {
+                                        <td>
+                                            @dakika dakika @kalanSaniye saniye önce
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            @kalanSaniye saniye önce
+                                        </td>
+                                    }
+                                </tr>
+                            }
+
+ile kaç gün kaç dakika kaçsaniye olduğunu görebiliyoruz.
+
+# 80 Ders (Entity Framework Code First Two Foreign Keys From Same Table) (Önemli)
+Bu derste öncelikle Team ve Match adlı iki entity'i projeye dahli edip Team classında 
+
+public virtual ICollection<Match> HomeMatches { get; set; }
+public virtual ICollection<Match> AwayMatches { get; set; }
+
+        /* Bu kod örneği, Entity Framework Core (EF Core) kullanılarak bir ilişki modelini tanımlamak için kullanılan iki ICollection özelliğidir. Bu özellikler, bir takım ile ev sahibi veya konuk olarak oynadıkları tüm maçları tutar.
+
+          HomeMatches özelliği, takımın ev sahibi olarak oynadığı tüm maçların koleksiyonunu tutar. Bu koleksiyonda, Match sınıfından bir nesne bulunur.
+
+          AwayMatches özelliği ise takımın konuk olarak oynadığı tüm maçların koleksiyonunu tutar. Bu koleksiyonda da Match sınıfından bir nesne bulunur.
+
+          Bu ilişki, Match sınıfındaki HomeTeam ve GuestTeam özellikleriyle ilişkilidir. Bu özellikler, sırasıyla, maçın ev sahibi takımını ve konuk takımını belirtir. HomeMatches ve AwayMatches özellikleri, her bir takımın oynadığı maçlarla ilişkilidir ve bu özellikler, bir takım silindiğinde, bu takımla ilgili tüm maç kayıtlarının da silinmesini önlemek için kullanılır.
+        */
+
+devamında bu iki classı Context tarafında tanımladıktan sonra
+
+ protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Match>()
+                .HasOne(x => x.HomeTeam)
+                .WithMany(y => y.HomeMatches)
+                .HasForeignKey(z => z.HomeTeamID)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<Match>()
+                .HasOne(x => x.GuestTeam)
+                .WithMany(y => y.AwayMatches)
+                .HasForeignKey(z => z.GuestTeamID)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+        }
+
+        /* Bu kod, Entity Framework Core (EF Core) kullanılarak bir ilişki modelini kurmak için Fluent API'yi kullanır. Bu özellik, iki farklı ilişkiyi belirler: "HomeTeam" ve "GuestTeam" arasındaki birçoklu ilişki.
+
+        OnModelCreating yöntemi, veritabanı modelinin tanımlandığı yerdir.Bu yöntem, bir ModelBuilder nesnesi tarafından kullanılarak veritabanı modeli için kuralların ayarlanmasına izin verir.
+
+        Bu kod örneğinde, Match tablosu birincil tablodur ve HomeTeam ve GuestTeam tablolarıyla ilişkilidir.Ayrıca, Match tablosunun HomeTeamID ve GuestTeamID alanları, sırasıyla, HomeTeam ve GuestTeam tablolarının anahtar alanları ile eşleşir.
+
+
+        Bu kod, Match tablosunun HomeTeam alanı için bir ilişki belirtir ve HasOne, WithMany ve HasForeignKey metodları aracılığıyla bu ilişkiyi tanımlar. Aynı işlem GuestTeam alanı için de yapılır.
+        
+
+        .OnDelete(DeleteBehavior.ClientSetNull) ifadesi her iki durumda da kullanılır ve "ClientSetNull" silme davranışını belirtir.Bu, bir takım silindiğinde, o takımla ilgili tüm maç kayıtlarının takım alanlarının null olarak ayarlanmasını sağlar. 
+        */
+
+ile çoklu ilişki yapısını görüyoruz ardından migration ile sql tarafına geçtiğimizde bu yapının sağlıklı bir şekilde kurulduğunu görüyoruz.
+
+# 81 Ders (Mesajlarla Yazarların İlişkilendirilmesi)
+Bu derste ilk olarak message2 adlı entityi oluşturuyoruz
+Team => Writer
+Match => Message2 ye denk geliyor. 
+
+Message2 =>
+
+public Writer SenderUser { get; set; }
+public Writer ReceiverUser { get; set; }
+
+Writer => 
+
+public virtual ICollection<Message2> WriterSender { get; set; }
+public virtual ICollection<Message2> WriterReceiver { get; set; }
+
+ardından Context'te bu iki sınıfı tanımlayıp ;
+
+modelBuilder.Entity<Message2>()
+                .HasOne(x => x.SenderUser)
+                .WithMany(y => y.WriterSender)
+                .HasForeignKey(z => z.SenderID)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+modelBuilder.Entity<Message2>()
+                .HasOne(x => x.ReceiverUser)
+                .WithMany(y => y.WriterReceiver)
+                .HasForeignKey(z => z.ReceiverID)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+yazarak çoklu ilişki oluşturduk ve dersi bitirdik.
+
+# 82 Ders (Yazara Ait Mesaj Bildirimleri)
+Oluşturmuş olduğumuz Message2 adlı entity nin dal ve business layerdaki eklemelerini yapıyoruz.
+
+IMessageService'de;
+
+        List<Message2> GetInboxListByWriter(int id);
+
+Message2Manager'de;
+
+        public List<Message2> GetInboxListByWriter(int id)
+        {
+            return _message2Dal.GetListAll(x => x.ReceiverID == id);
+        }
+
+kodlarını yazarak id'ye gör mesajları listeleyeceğiz.
+
+Ardından WriterMessageNotification'da message2 yi çağırarak Defaul'unda listelettirdik.
+
+# 83 Ders (Message Include)
+Bu deste öncelikle IMessage2Dal'a;
+
+        List<Message2> GetListWithMessageByWriter(int id);
+
+daha sonra EfMessage2Repository'e;
+
+        public List<Message2> GetListWithMessageByWriter(int id)
+        {
+            using (var c = new Context())
+            {
+                return c.Message2s.Include(x => x.SenderUser).Where(x => x.ReceiverID == id).ToList();
+            }
+        }
+
+devamında Message2Manager'a;
+
+public List<Message2> GetInboxListByWriter(int id)
+        {
+            return _message2Dal.GetListWithMessageByWriter(id);
+        }
+
+kodlarını yazdık. Devamında component'e bu kodlar sayesinde gönderenin adını ve resmini getirebildik getirebildik. Zamanı üstteki gibi çektim.
+
+# 84 Ders (Mesaj Detaylarının Listelenmesi)
+Bu derste öncelikle MessageController açıp Inbox ve MessageDetails için bu view oluşturup uygun şekilde doldurup dersi bitirdik.
+
+# 85 Ders (Get Logged User Name)
+Bu derste WriterController'da
+
+[Authorize]
+        public IActionResult Index()
+        {
+            var usermail = User.Identity.Name;
+            ViewBag.v = usermail;
+            Context context = new Context();
+            var writerName = context.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterName).FirstOrDefault();
+            ViewBag.v2 = writerName;
+            return View();
+        }
+
+kodu ile giriş yapan kullanıcının mailini ve ismini çektik.
+
+# 86 Ders (Login Olan Yazarın Bilgilerini Getirme)
+Bu derste bir önceki derste yaptığımız yöntemle artık 1. ID'ye göre değil sisteme otantike olmuş kullanıcıya göre işlem yaptırdık.
+-> BlogController
+-> DashboardController
+-> WriterAboutOnDashboard
+
+# 87 Ders (Admin Teması)
+Bu derste admin temamızı projeye dahil ediyoruz. Devamında shared içinde admin için bir layout oluşturup link verip dersi bitirdik.
+
+# 88 Ders (Admin Layout Düzenlemesi)
+Bu derste Admin layoutu için sidebar partial'ı açtık ve dünledik.
+
+# 89 Ders (Areas)
+Bu derste areanın tanımında ve açma işleminde bahsedildi. UI katmanına Area klasörünü ekleyip add -> area -> mvc area -> Admin olarak açtık.
+
+# 90 Ders (Areas Map Controller Route)
+Bu derste Admin areasının içine CategoryController ekleyip view ekledik. Ardından bu viewin çalışmadığını gördük çünkü scaffolding dosyası ile gelen areanın bu dosya içindeki kodu startupta UseEndpoints içine yazmamız gerekiyor. Ardından sayfa çalıştı. Controller'a [Area("Admin")] yazmayı unutmuyoruz.
+
+# 91 Ders (Admin Panelinde Kategorilerin Listelenmesi)
+Bu derste Admin aresına Categoryleri tablo yapısı ile çektik.
+
+# 92 Ders (Pagination)
+Bu derste öncelikle UI katmanına aşağıdaki paketleri yüklüyoruz.
+-> X.PagedList (8.1.0)
+-> X.PagedList.Mvc.Core (8.1.0)
+
+devamında Category controller'ı
+
+using BusinessLayer.Concrete;
+using DataAccessLayer.EntityFramework;
+using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
+
+namespace CoreDemo.Areas.Admin.Controllers
+{
+    [Area("Admin")]
+    [Route("Admin/[Controller]/[Action]/{id?}")]
+    public class CategoryController : Controller
+    {
+        CategoryManager cm = new CategoryManager(new EfCategoryRepository());
+        public IActionResult Index(int page = 1)
+        {
+            var values = cm.GetList().ToPagedList(page, 3);
+            return View(values);
+        }
+    }
+}
+
+şeklinde düzenliyoruz ve Index tarafınıda
+
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<EntityLayer.Concrete.Category>
+
+<br />
+@Html.PagedListPager((IPagedList)Model, page=>Url.Action("Index", new{ page }))
+
+şeklinde düzenleyince artık istediğimiz sayıda veriyi tabloda gösterebiliyoruz.
+
+# 93 Ders (Admin Panelinde Yeni Kategori Ekleme)
+Bu derste AddCategory için HttpGet ve Post işlemleri  ve CategoryValidator'u yazdık ardından form yapısı oluşturup eklemeişlemini tamamladıktan sonra dersi bitirdik.
+
+# 94 Ders (Confirm Delete)
+Bu derste DeleteCategory adlı controllerı yazdıktan sonra view tarafında
+
+<td><a href="/Admin/Category/DeleteCategory/@item.CategoryID" id="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz?')"><i class="fa fa-times text-danger"></i></a></td>
+
+ile onaylattırıyoruz.
+
+# 95 Ders (Excel Export 1)
+Bu derse 
+
+-> ClosedXML (0.95.4) paketini kurarak başlıyoruz.
+
+Devamında BlogController ve BlogModel'i açıp
+
+public IActionResult ExportStaticExcelBlogList()
+        {
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Blog Listesi");
+                worksheet.Cell(1, 1).Value = "Blog ID";
+                worksheet.Cell(1, 2).Value = "Blog Adı";
+
+                int blogRowCount = 2;
+                foreach (var item in GetBlogList())
+                {
+                    worksheet.Cell(blogRowCount, 1).Value = item.ID;
+                    worksheet.Cell(blogRowCount, 2).Value = item.BlogName;
+                    blogRowCount++;
+                }
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content=stream.ToArray();
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Calisma1.xlsx");
+                }
+            }
+        }
+        public List<BlogModel> GetBlogList()
+        {
+            List<BlogModel> bm = new List<BlogModel>
+            {
+                new BlogModel {ID=1,BlogName="C# Programlamaya Giriş"},
+                new BlogModel {ID=2,BlogName="Tesla Firmasının Araçlar"},
+                new BlogModel {ID=3,BlogName="2023 Olimpiyatları"}
+            };
+            return bm;
+        }
+
+yazarak dersi bitirdik.
+
+# 96 Ders (Excel Export 2)
+Bu derste ilk olarak blogController tarafına
+
+public IActionResult BlogListExcel()
+        {
+            return View();
+        }
+
+        yazıp index ekliyoruz ve
+
+<a href="/Admin/Blog/ExportStaticExcelBlogList" class="btn btn-primary">Excel Listesini İndir</a>
+
+kodu ile excel listesinin indiğini görüyoruz.
+
+# 97 Ders (Excel Dinamik Tablo Export)
+Bu derste ilk olarak BlogController'da
+
+ public IActionResult ExportDinamicExcelBlogList()
+        {
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Blog Listesi");
+                worksheet.Cell(1, 1).Value = "Blog ID";
+                worksheet.Cell(1, 2).Value = "Blog Adı";
+
+                int blogRowCount = 2;
+                foreach (var item in BlogTitleList())
+                {
+                    worksheet.Cell(blogRowCount, 1).Value = item.ID;
+                    worksheet.Cell(blogRowCount, 2).Value = item.BlogName;
+                    blogRowCount++;
+                }
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Calisma1.xlsx");
+                }
+            }
+        }
+
+        public List<BlogModel2> BlogTitleList()
+        {
+            List<BlogModel2> bm = new List<BlogModel2>();
+            using (var c = new Context())
+            {
+                bm = c.Blogs.Select(x => new BlogModel2
+                {
+                    ID = x.BlogID,
+                    BlogName = x.BlogTitle
+                }).ToList();
+            }
+            return bm;
+        }
+
+        public IActionResult BlogTitleListExcel()
+        {
+            return View();
+        }
+
+güncellemesi yapıp view ekledik. Ardıdan bu viewde bi önceki yapı ile excel'in indiğini gördük.
+
+# 98 Ders (Kampı Widgets)
+Bu derste olarak WidgetController açıp templateden alıp gerekli kısmı viewine kouyoruz devamında scriptler için AdminLayouta bir patal oluşturup eşitledim.
+
+# 99 Ders (İstatistik 1)
+Bu derste Admin Areası Componentleme işlemi için gerekli klasörleri oluşturduktan sonra Statistic1 için componentleme işlemini gerçekleştirip Viewbagler ile verileri çektik.
+
+# 100 Ders (İstatistik 2)
+Bu derste bir önceki ders gibi Statistic2 den devam ettik.
+
+# 101 Ders (Admin Tablosu)
+Bu derste Statistic4 için componentleme yapısı kurarken aynı zamanda Admin entitysini projeye dahil ediyoruz.
+
+# 102 Ders (İstatistik 3)
+Bu derste bir önceki derste oluşturmuş olduğumuz admin sayfası için Dal ve businessta gerekli eklemeleri yapıpm Statistic4 için istediğimiz veriyi çektik.
+
+# 103 Ders (Api Üzerinden Hava Durumu Bilgisi Çekme)
+https://openweathermap.org/api sitesine üye oluyoruz. Bu siteden gelen Api key'i Statistic1 içine yazarak apiyi çağırıyoruz.
+
+string api = "0be77b477064af1c5eb2da55c4cc3b84";
+            string connection = "https://api.openweathermap.org/data/2.5/weather?q=istanbul&mode=xml&lang=tr&units=metric&appid=" + api;
+            XDocument document = XDocument.Load(connection);
+            ViewBag.v4 = document.Descendants("temperature").ElementAt(0).Attribute("value").Value;
+
+# 104 Ders (Google Chart 1)
+Bu derste il olarak CategoryClass modelini daha sonra ChartController'ı Admin areasına dahil ediyoruz. Devamında
+
+ public IActionResult CategoryChart()
+        {
+            List<CategoryClass> list = new List<CategoryClass>();
+
+            list.Add(new CategoryClass
+            {
+                CategoryName = "Teknoloji",
+                CategoryCount = 10
+            });
+
+            list.Add(new CategoryClass
+            {
+                CategoryName = "Yazılım",
+                CategoryCount = 14
+            });
+
+            list.Add(new CategoryClass
+            {
+                CategoryName = "Spor",
+                CategoryCount = 5
+            });
+
+            return Json(new { jsonlist = list });
+        }
+
+ChartController'ı bu kodu yazdıktan sonra View ekleyip dersi bitiriyoruz.
+
+# 105 Ders (Google Chart 2)
+Bu derste ilk olarak CategoryClass modelini ardından ChartController'ı Admin aresına ekleyip daha sonra
+
+public IActionResult CategoryChart()
+        {
+            List<CategoryClass> list = new List<CategoryClass>();
+
+            list.Add(new CategoryClass
+            {
+                categoryname = "Teknoloji",
+                categorycount = 10
+            });
+
+            list.Add(new CategoryClass
+            {
+                categoryname = "Yazılım",
+                categorycount = 14
+            });
+
+            list.Add(new CategoryClass
+            {
+                categoryname = "Spor",
+                categorycount = 5
+            });
+
+            list.Add(new CategoryClass
+            {
+                categoryname = "Sinema",
+                categorycount = 2
+            });
+
+            return Json(new { jsonlist = list });
+        }
+
+kodlarını yazıp ardından index ekliyoruz. Devamından
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="chartdiv" style="width:800px; height:600px">
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(DrawonLoad);
+    function DrawonLoad() {
+        $(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/Chart/CategoryChart/',
+                success: function (chartsdata) {
+                    var Data = chartsdata.jsonlist;
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'categoryname');
+                    data.addColumn('number', 'categorycount');
+                    for (var i = 0; i < Data.length; i++) {
+                        data.addRow([Data[i].categoryname, Data[i].categorycount]);
+                    }
+                    var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+                    chart.draw(data, {
+                        title: "Google Chart Core Projesi",
+                        position: "top",
+                        fontsize: "16px"
+                    });
+                }
+            });
+        });
+    }
+</script>
+
+indexi de bu şekilde yazdıktan sonra chart dinamik olarak geliyor.
+
+# 106 Ders (Ajax ile Verilerin Consoleda Listelenmesi)
+Bu derste ilk olarak WriterClass modelini ardından Writer controller'ı ajax işlemi için Admin areasına dahil ediyoruz. Ardından Writer controller'da statik olarak bir kaç kişi ekledikten sonra _adminlayoutta
+
+@await RenderSectionAsync("scripts")
+
+vw bu kontrollera ait index'te
+
+@section scripts{
+    <script>
+        $("#btngetlist").click(function () {
+            $.ajax({
+                contentType: "application/json",
+                dataType: "json",
+                type: "Get",
+                url: "/Admin/Writer/WriterList",
+                success: function (func) {
+                    console.log(func);
+                }
+            });
+        });
+    </script>
+}
+
+değişikliklerini yaptıktan sonra console'da verilerin geldiğini gördük.
+
+# 107 Ders (Ajax İle Verilerin Tabloya Çekilmesi)
+Bu derste bir önceki dersteki section'u
+@section scripts{
+    <script>
+        $("#btngetlist").click(function () {
+            $.ajax({
+                contentType: "application/json",
+                dataType: "json",
+                type: "Get",
+                url: "/Admin/Writer/WriterList/",
+                success: function (func) {
+                    let w=jQuery.parseJSON(func);
+                    console.log(w);
+
+                    let tablehtml = "<table class='table table-bordered'> <tr> <th> Yazar ID </th> <th> Yazar Bilgileri </th> </tr>";
+                    $.each(w, (index, value) => {
+                        tablehtml += `<tr><td>${value.ID}</td> <td>${value.Name}</td></tr>`;
+                    });
+                    tablehtml += "</table>";
+                    $("#writerlist").html(tablehtml);
+                }
+            });
+        });
+    </script>
+}
+
+olarak güncelleyerek tablo yapısını kurduk.
+
+# 108 Ders (Ajax Parametre Olarak Gönderilen Değerin Consoleda Listelenmesi)
+Bu derste WriterController'da
+
+ public IActionResult GetWriterByID(int writerid)
+        {
+            var findwriter = writers.FirstOrDefault(x => x.ID == writerid);
+            var jsonWriters = JsonConvert.SerializeObject(findwriter);
+            return Json(jsonWriters);
+        }
+
+ve indexinde 
+
+ $("#btngetbyid").click(x => {
+            let id = $("#writerid").val();
+            console.log(id);
+  });
+
+yazarak console girdiğimiz sayıyı yazdırdık.
+
+# 109 Ders (Ajax İle Id'ye Göre Veri Getirme)
+Bu derste script kısmını
+
+ $("#btngetbyid").click(x => {
+            let id = $("#writerid").val();
+            $.ajax({
+                contentType: "application/json",
+                dataType: "json",
+                type: "Get",
+                url: "/Admin/Writer/GetWriterByID/",
+                data: { writerid: id },
+                success: function (func) {
+                    let w=jQuery.parseJSON(func);
+                    console.log(w);
+                }
+            });
+        });
+
+olarak güncelleyerekconsole istedğimiz kişiyi çağırdık.
+
+# 110 Ders (Ajax ile ID'ye Göre Gelen Veriyi Tabloya Yazma)
+Bu derste index tarafında
+$("#btngetbyid").click(x => {
+            let id = $("#writerid").val();
+            $.ajax({
+                contentType: "application/json",
+                dataType: "json",
+                type: "Get",
+                url: "/Admin/Writer/GetWriterByID/",
+                data: { writerid: id },
+                success: function (func) {
+                    let w = jQuery.parseJSON(func);
+                    console.log(w);
+
+                    let getvalue = `<table class = table table-bordered> <tr> <th> Yazar ID </th> <th> Yazar Bilgisi </th> </tr> <tr> <td> ${w.ID} </td> <td> ${w.Name} </td> </tr> </table>`;
+                    $("#writerget").html(getvalue);
+                }
+            });
+        });
+
+ile tablo yapısı ve id ile yazarı getirdik.
+
+# 111 Ders (Ajax İle Ekleme)
+Bu derste WriterController de AddWriter controllerını yazarak index tarafında da
+
+        $("#btnaddwriter").click(function () {
+            let writer = {
+                ID: $("#txtwriterid").val(),
+                Name: $("#txtwritername").val()
+            };
+
+            $.ajax({
+                type: "post",
+                url: "/Admin/Writer/AddWriter/",
+                data: writer,
+                success: function (func) {
+                    let result = jQuery.parseJSON(func);
+                    alert("Yazar ekleme işlemi başarılı bir şekilde gerçekleşti.");
+                }
+            });
+        });
+
+işlemi ile başarılı bir şekilde ekleme işlemini tamamladık.
+
+# 112 Ders (Ajax İle Silme)
+Bu derste WriterController de DeleteWriter controllerını yazarak index tarafında da
+
+        $("#btndeletewriter").click(x => {
+            let id = $("#txtid").val();
+
+            $.ajax({
+                url: "/Admin/Writer/DeleteWriter/" + id,
+                type: "post",
+                dataType: "json",
+                success: function (func) {
+                    alert("Yazar silme işlemi başarılı bir şekilde gerçekleşti.");
+                }
+            });
+        });
+
+işlemi ile başarılı bir şekilde ekleme işlemini tamamladık.
+
+# 113 Ders (Ajax ile Update)
+Bu derste WriterController de UpdateWriter controllerını yazarak index tarafında da
+
+       $("#btnupdatewriter").click(function () {
+            let writer = {
+                ID: $("#txtid1").val(),
+                Name: $("#writername1").val()
+            };
+
+            $.ajax({
+                type: "post",
+                url: "/Admin/Writer/UpdateWriter/",
+                data: writer,
+                success: function (func) {
+                    alert("Güncelleme yapıldı.");
+                }
+            });
+        });
+
+işlemi ile başarılı bir şekilde ekleme işlemini tamamladık.
+
+# 114 Ders (Apilere Giriş)
+Bu derste solition'a sağ tık add new project diyip ASP.NET WEB API seçiyoruz ve ekliyoruz. Ardından BlogApiDemo adlı bu katmana DataAccessLayer klasörü içine de Context ve Employee classlarını dahil edip katmana
+
+-> Microsoft.EntityFrameworkCore (5.0.13)
+-> Microsoft.EntityFrameworkCore.Design (5.0.13)
+-> Microsoft.EntityFrameworkCore.SqlServer (5.0.13)
+-> Microsoft.EntityFrameworkCore.Tools (5.0.13)
+
+paketlerini yüklüyoruz. Daha sonra Contexti doldurum migration yaparak dersi bitiriyoruz.
+
+# 115 Ders (Swagger Ve Api Get List)
+Bu dersre o BlogApiDemo da oluşturduğumuz DefaultController'a(Api Controller) 
+
+[HttpGet]
+        public IActionResult EmployeeList()
+        {
+            using var c = new Context();
+            var values = c.Employees.ToList();
+
+            return Ok(values);
+        }
+
+yazdıktan sonra ctrl f5 ile çalıştırdık ve Get -> Try it out -> Execute dedikten sonra verilerin listelendiğini gördük. Devamında Curl daki url yi açtığımızda verilerin json olarak geldiğini gördük.
+
+# 116 Ders (Postman İle İstek Gönderme)
+Postmani açıp https://localhost:44346/api/Default yazıp Send diyoruz. Verilerin listelendiğini görüyoruz.
+
+[HttpPost]
+        public IActionResult EmployeeAdd()
+        {
+            return Ok();
+        }
+
+ile Post etiketininde geldiğini görüyoruz.
+
+# 117 Ders (Api ile Veri Ekleme)
+Bu derste DefaultController'ı
+
+[HttpPost]
+        public IActionResult EmployeeAdd(Employee employee)
+        {
+            using var c = new Context();
+            c.Add(employee);
+            c.SaveChanges();
+
+            return Ok();
+        }
+
+şeklinde güncelledikten sonra Post kısmında ekleme yapabildik.
+
+Daha sonra postman tarafında adresimini yazdıktan sonra Post işlemini seçip raw -> JSON seçip
+
+{
+   "name":"Eylül Çınar"
+}
+
+dedikten sonra Send diyoruz ve get diyip send dediğimizde eklendiğini aynı zamanda SQL'e de eklendiğini görüyoruz.
+
+# 118 Ders (Apiler İle Veri Getirme)
+Bu derste ID ye göre getirme işlemi için
+
+[HttpGet("{id}")]
+        public IActionResult EmployeeGet(int id)
+        {
+            using var c = new Context();
+            var employee = c.Employees.Find(id);
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            else
+            {
+                return Ok(employee);
+            }
+
+        }
+
+controller'ını yazıyoruz ve ID'ye göre geldiğini görüyoruz.
+
+Postman tarafında da https://localhost:44346/api/Default/2 ile ID'ye göre geliyor.
+
+# 119 Ders (Apilerle Silme Ve Güncelleme)
+Controller tarafında
+
+[HttpDelete("{id}")]
+        public IActionResult EmployeeDelete(int id)
+        {
+            using var c = new Context();
+            var employee = c.Employees.Find(id);
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            else
+            {
+                c.Remove(employee);
+                c.SaveChanges();
+                return Ok();
+            }
+       
+yazarak ID'ye göre silme işlemini yaptık.
+Postman tarafında da aynı ID'ye göre getirme gibi yapıp Delete seçiyoruz.
+
+ [HttpPut]
+        public IActionResult EmployeeUpdate(Employee employee)
+        {
+            using var c = new Context();
+            var emp = c.Employees.Find(employee.ID);
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            else
+            {
+                emp.Name = employee.Name;
+                c.Update(emp);
+                c.SaveChanges();
+
+                return Ok();
+            }
+        }
+
+ile ID'ye göre güncelleme işlemini sağladık.
+
+Postman tarfında da
+
+{
+     "id":"3",
+    "name":"Gamze"
+}
+ile Put seçerek güncellettirdik.
+
+# 120 Ders (Apilerle Projenin Haberleştirilmesi Proje Üzerinden List & Add)
+Bu derste ilk olarak CoreDemo katmanına EmployeeTest controllerını ekliyoruz ve CoreDome katmanına BlogApiDemo katmanını referans olarak ekliyoruz. Devamında controler'ı
+
+public async Task<IActionResult> Index()
+        {
+            var httpClient = new HttpClient();
+            var responseMessage = await httpClient.GetAsync("https://localhost:44346/api/Default");
+            var jsonString = await responseMessage.Content.ReadAsStringAsync();
+            var values = JsonConvert.DeserializeObject<List<Class1>>(jsonString);
+            return View(values);
+        }
+
+public class Class1
+        {
+            public int ID { get; set; }
+            public string Name { get; set; }
+        }
+
+olarak güncelleyip eklediğimiz index'e tablo yapısı kurarak verileri api katamından listeliyoruz. Devamında çalışan ekleyebilmek için
+
+[HttpGet]
+        public IActionResult AddEmployee()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddEmployee(Class1 p)
+        {
+            var httpClient = new HttpClient();
+            var jsonEmployee = JsonConvert.SerializeObject(p);
+            StringContent content = new StringContent(jsonEmployee, Encoding.UTF8, "application/json");
+            var responseMessage = await httpClient.PostAsync("https://localhost:44346/api/Default", content);
+
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index", "EmployeeTest");
+            }
+
+            return View(p);
+        }
+
+olarak yazıp bu controllerın indexine form yapısı kurarak kişi eklemeyi sağladık.
+
+# 121 Ders (Apilerle Projenin Haberleştirilmesi Proje Üzerinden Edit & Delete)
+Bu derste EmployeeTestControllerda önce güncelleme için
+
+
+        [HttpGet]
+        public async Task<IActionResult> EditEmployee(int id)
+        {
+            var httpClient = new HttpClient();
+            var responseMessage = await httpClient.GetAsync("https://localhost:44346/api/Default/" + id);
+
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonEmployee = await responseMessage.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<Class1>(jsonEmployee);
+                return View(values);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditEmployee(Class1 p)
+        {
+            var httpClient = new HttpClient();
+            var jsonEmployee = JsonConvert.SerializeObject(p);
+            var content = new StringContent(jsonEmployee, Encoding.UTF8, "application/json");
+            var responseMessage = await httpClient.PutAsync("https://localhost:44346/api/Default", content);
+
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(p);
+        }
+
+kodunu yaxdık ve index ekledik form yapısı ve ID yi gizli tutarak işlemi tamamladık.
+
+Ardından
+
+public async Task<IActionResult> DeleteEmployee(int id)
+        {
+            var httpClient = new HttpClient();
+            var responseMessage = await httpClient.DeleteAsync("https://localhost:44346/api/Default/" + id);
+
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
+ile silme işlemini tamamlayarak dersi bitirdik.
+
+# 122 Ders (Identity Kütüphanesi)
+Bu derte UI ve DataAccess katmanlarına
+-> Microsoft.AspNetCore.Identity (2.2.0)
+-> Microsoft.AspNetCore.Identity.EntityFramework (5.0.13) DAL -> (5.0.9)
+
+IdentityDbContext => Context sınıfından miras alır ve Context sınıfına ait bütün özellikleri kullanır.
+
+Daha sonra Context sınıfında
+
+public class Context : IdentityDbContext
+base.OnModelCreating(modelBuilder);
+
+güncellemesini yaptıktan sonra migration yapıyoruz. Ardından IDentity tablolarının geldiğini görüyoruz.
+
+Devamında aynı paketleri entity katmanına kurduk ve AppUser classını Entity katmanına dahil ettik. Bu classı Identity e bağlamak için  : IdentityUser<int> kodunu ve Context'te Context : IdentityDbContext <AppUser> olarak güncelledik ve ardından migration yaparak dersi bitirdik.
+
+# 123 Ders (Identity ile Register İşlemi)
+Bu derste ilk olarak AppUser ve IdentityDbContext i sildik ve eski haline getirdik ardından AppUser ve AppRole classlarını iEntity'e dahil edip Context 'te  public class Context : IdentityDbContext<AppUser, AppRole, int> değişikliğini yapıp migration yaptık.
+
+Daha sonra UI katmanındaModel klasörüne UserSignUpViewModel ekleyerek
+
+[Display(Name = "İsim Soyisim")]
+        [Required(ErrorMessage = "Lütfen isminizi ve soyisminizi giriniz.")]
+        public string NameSurname { get; set; }
+
+        [Display(Name = "Kullanıcı Adı")]
+        [Required(ErrorMessage = "Lütfen kullanıcı adınızı giriniz.")]
+        public string UserName { get; set; }
+
+        [Display(Name = "Şifre")]
+        [Required(ErrorMessage = "Lütfen şifrenizi giriniz.")]
+        public string Password { get; set; }
+
+        [Display(Name = "Şifre Tekrarı")]
+        [Compare("Password", ErrorMessage = "Şifreleriniz uyuşmuyor.")]
+        public string ConfirimPassword { get; set; }
+
+        [Display(Name = "E-Posta")]
+        [Required(ErrorMessage = "Lütfen e-posta adresinizi giriniz.")]
+        public string Mail { get; set; }
+
+propertylerini tanımlıyoruz. Devamından RegisterUserController'ı ekleyip
+
+private readonly UserManager<AppUser> _userManager;
+
+        public RegisterUserController(UserManager<AppUser> userManager)
+        {
+            _userManager = userManager;
+        }
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(UserSignUpViewModel p)
+        {
+            if (ModelState.IsValid)
+            {
+                AppUser user = new AppUser()
+                {
+                    Email = p.Mail,
+                    UserName = p.UserName,
+                    NameSurname = p.NameSurname,
+                };
+
+                var result = await _userManager.CreateAsync(user, p.Password);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("SignIn", "Login");
+                }
+
+                else
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("", item.Description);
+                    }
+                }
+            }
+            return View(p);
+        }
+
+şeklinde yazıyoruz.
+
+Ardından bu controller'a ait index i çalıştırdığımızda çalışmadığı için start'up ;
+
+services.AddDbContext<Context>();
+
+services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>();
+
+kodlarını yazıyoruz ve çalıştığını görüyoruz daha sonra admin templatesinden register kısmını alıp kendi indeximize koyup dersi bitiriyoruz.
+
+# 124 Ders (Register İşleminin Tamamlanması ve Identity Konfigürasyonları)
+Bu derste Register/Index'i düzenleyip alanları ekliyoruz. Hata mesajları için span etiketlerini ekliyoruz.
+
+<div asp-validation-summary="ModelOnly"></div> bu kod ile default password ayarlarını gösterir. Bu zorunlulukları kaldırmak için startupta
+
+services.AddIdentity<AppUser, AppRole>(x =>
+            {
+                x.Password.RequireUppercase = false;
+                x.Password.RequireNonAlphanumeric = false;
+            })
+            .AddEntityFrameworkStores<Context>();
+
+işlemini yapıyoruz.
+
+# 125 Ders (Identity ile Login İşlemi)
+Bu derste RegisterUserController 'ı iptal edip Logine hem SignUp'ı hemde SignIn'ı yapıp çalşımasını sağladık. SignIn için UserSignInViewModel'i ekleyip çalışmasını sağladık.
+
+# 126 Ders (Identity İle Giriş Yapan Kullanıcının Bilgilerini Getirme)
+Bu derste Dashboard/Indexte giriş yapmış kullanıcıların bilgilerini getirebilmek için WriterAboutOnDashboard ve Default'unda değişiklikler yaptık.
+
+var username = User.Identity.Name;
+
+var usermail = context.Users.Where(x => x.UserName == username).Select(x => x.Email).FirstOrDefault();
+
+var writerID = context.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterID).FirstOrDefault();
+
+önemli kısımlar.
+
+Home/Index yapıldı. Giriş yapan kullanıcı için ayrı yapmayan için ayrı bir topbar yapıldı.
+
+# 127 Ders (Ajax ile Mail Bülteni Subscribe (Partial View Ajax With Post)
+-> BlogController, NewsLetterController ve SubscribeMail da revizeler yapıldı.
+
+# 128 Ders (Yazar Panelinde Revizeler)
+Blog/Index, DashboardControlle ve WriterController revizeler yapıldı.
+
+# 129 Ders (Yazar Bilgilerinin Identitye Bağlanması)
+Bu derste EditWriter için Dal ve business layer'da AppUser için gerekli interface ve classları ekledik. ardıdan get kısmını tamamlayıp dersi bitirdik.
+
+# 130 Ders (Identity FindByNameAsync ve UpdateAsync)
+Bu derste UserUpdateViewModel oluşturarak WriterController'da
+
+[HttpGet]
+        public async Task<IActionResult> WriterEditProfile()
+        {
+            var values = await _userManager.FindByNameAsync(User.Identity.Name);
+            UserUpdateViewModel user = new UserUpdateViewModel();
+            user.nameSurname = values.NameSurname;
+            user.userName = values.UserName;
+            user.imageUrl = values.ImageUrl;
+            user.mail = values.Email;
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> WriterEditProfile(UserUpdateViewModel user)
+        {
+            var values = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            if (user.image != null)
+            {
+                var resource = Directory.GetCurrentDirectory();
+                var extension = Path.GetExtension(user.image.FileName);
+                var imagename = Guid.NewGuid() + extension;
+                var savelocation = resource + "/wwwroot/userimages/" + imagename;
+                var stream = new FileStream(savelocation, FileMode.Create);
+                await user.image.CopyToAsync(stream);
+                values.ImageUrl = "/userimages/" + imagename;
+                ViewBag.IN = "/userimages/" + imagename;
+            }
+            values.NameSurname = user.nameSurname;
+            values.UserName = user.userName;
+            values.Email = user.mail;
+
+            var result = await _userManager.UpdateAsync(values);
+
+            return RedirectToAction("SignIn", "Login");
+        }
+
+işlemleri ile güncelleme işlemlerini tamamladık.
+
+# 131 Ders (Identity ile Şifre Güncelleme)
+Bu derste UserUpdateViewModel da password property sini ekledikten sonra WriterController'da
+
+values.PasswordHash = _userManager.PasswordHasher.HashPassword(values, user.password);
+
+kodu ile View tarafında şifreyi yenilettirdik. Devamında logincontrollerda logout işlemini yaptık.
+
+Bu derse başlamadan önce;
+
+-> Artık bir kişi üye olduğunda writer tablosunada eklenecek
+-> Bilgilerini güncellediğinde her 2 tablodada güncellenecek.
+-> Fotoğraf yüklediğinde her 2 tabloya ve writer layoutunda ki yerlerde gözükecek.
+-> Writerprofile sayfası yapıldı.
+-> Ayarlarda About kısmını güncelleyebilcek.
+
+# 132 Ders (Blog Son Revizeler)
+-> Yazara ait bloglar getirildi.
+-> Yazar yeni bir görselli blog ekleyebiliyor.
+-> Mesajlar artık giriş yapan kullanıcıya göre yapıldı.
+
+# 133 Ders (Yazar Panelinde Mesaj İşlemlerinin Tamamlanması)
+Giriş yapan kullanıcı; gelen mesaj kutusu, giden mesaj kutusu ve mail seçerek mesaj gönderme işlemi yapabiliyor artık.
+
+# 134 Ders (Yazar İşlemlerinin Tamamlanması)
+Bu derste yazar işlemleri tamamen tamamlanmıştır.
+
+# 135 Ders (Admin Paneli Düzenlemeleri ve Mesaj Sayfası)
+Sidebar'a yapılan sayfaların linki verildi. Devamında InBox için templatden aldığımız kodu kendimize uydurduk.
+
+# 136 Ders (Admin Paneli Giden Kutusu ve Yeni Mesaj Sayfası)
+Bu derste admin panelinde admin templatesine uygun Gelem,Giden ve yeni mesaj gönderme sayfalarını yaptık.
+
+# 137 Ders (Admin Blog Listesi)
+Bu derste mesaj gönderme işlemi tamamlandı. Ardından Bloglar listelendi.
+
+# 138 Ders (Admin Yorum Listesi)
+Admin areasında yorumlar listelendi.
+
+# 139 Ders (Rol Listesi ve Rol Ekleme)
+Bu derste Rol adlarının listelenmesi ve RoleViewModel kullanılarak yeni rol eklenmesi işlemleri yapıldı.
+
+# 140 Ders (Rol Düzenleme ve Rol Silme)
+RoleUpdateViewModel yardımıyla Rol güncelleme, devamında rol silme işlemi ile dersi tamamladık.
+
+# 141 Ders (Kullanıcılar ve Roller)
+Bu derste kullanıcılar listelettirip RoleAssignViewModel yardımıyla rol atama işlemini yarıda bırakarak dersi bitirdik.
+
+# 142 Ders (Kullanıcıya Ait Rollerin Listelenmesi) (Önemli)
+Bu derste kullanıcıya ait rolleri listelettirdik. Çok önemli başka projelerden kullanılabilecek bir video.
+
+# 143 Ders (Rol Atama ve Rol Kaldırma İşlemleri)
+Bu derste önceki derste yarım bıraktığımız rol atama işlemini bitirdik.
+
+# 144 Ders (Rol Bazlı Yetkilendirme)
+Bu derste istediğimiz yerleri role'e göre açtık.
+
+# 145 Ders (Access Denied Sayfası)
+Bu derste admin olmayanların Admin paneline girerken verdiği hata için sayfa yazdık. En önemli kısım startupta
+
+options.AccessDeniedPath = new PathString("/ErrorPage/AccessDenied");
+
+kodudur.
+
+# 146 Ders (JsonWebToken ve Konfigürasyonu) (Tekrar edilecek.)
+Bu derste ilk olarak projemize yeni bir Api katmanı ekleyip http kısmını kaldırıyoruz. Devamında açtığımız "jwt_core_proje_kampi" adlı katmana 
+
+-> Microsoft.AspNetCore.Authentication.JwtBear (5.0.13)
+
+paketini yüklüyoruz. Devamında Configure işlemi için
+
+services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = "http://localhost",
+                    ValidAudience = "http://localhost",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("aspnetcoreprojekampi")),
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+kodlarını startup'a yazarak dersi sonlandırıyoruz.
+
+# 147 Ders (Token Oluşturma ve Test Etme)
+Bu derste 
+startup -> app.UseAuthentication(); 
+
+DAL/BuildToken ->   public string CretateToken()
+        {
+            var bytes = Encoding.UTF8.GetBytes("aspnetcoreprojekampi");
+            SymmetricSecurityKey key = new SymmetricSecurityKey(bytes);
+            SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            JwtSecurityToken token = new JwtSecurityToken(issuer: "http://localhost", audience: "http://localhost", notBefore: DateTime.Now, expires: DateTime.Now.AddMinutes(1), signingCredentials: credentials);
+
+            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+
+            return handler.WriteToken(token);
+        }
+
+Controller/Default ->  
+    [Route("api/[controller]")]
+    [ApiController]
+    public class DefaultController : ControllerBase
+    {
+        [HttpGet("[action]")]
+        public IActionResult Login()
+        {
+            return Created("", new BuildToken().CretateToken());
+        }
+
+        [Authorize]
+        [HttpGet("[action]")]
+        public IActionResult Page1()
+        {
+            return Ok("Sayfa 1 için girişiniz başarılı.");
+        }
+    }
+
+kodları ile jwt'yi startup project seçerek çalıştırıp http://localhost:13139/api/Default/Login urlsini Postman'a yapıştırdık ve token üretildi. 
+
+Daha sonra PostaManda yeni bir pencere açıp urlsini http://localhost:13139/api/Default/Page1 olarak verip Headers seçip Key : Authorization Value : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE2ODE4MzUwOTYsImV4cCI6MTY4MTgzNTE1NiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdCIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3QifQ.732NkR1-Zz0RL0nOG6O6dvnMuL-7MnHH-X6jYE3bWJ8 bu uzun kısım bir önceki sayfadan gelen token. Send dediğimizde controller'a yazdığımız mesajı yazdı.
