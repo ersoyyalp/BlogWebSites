@@ -15,6 +15,7 @@ namespace DataAccessLayer.Concrete
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("server=DESKTOP-56DC4TI; database=Alp_BlogDb; integrated security=true;");
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
