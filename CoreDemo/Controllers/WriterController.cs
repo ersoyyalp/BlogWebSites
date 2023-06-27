@@ -59,7 +59,7 @@ namespace CoreDemo.Controllers
 
         [HttpGet]
         public async Task<IActionResult> WriterEditProfile()
-        {     
+        {
             var values = await _userManager.FindByNameAsync(User.Identity.Name);
             var usermail = context.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Email).FirstOrDefault();
             var writerAbout = context.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterAbout).FirstOrDefault();
@@ -69,7 +69,8 @@ namespace CoreDemo.Controllers
             user.aboutWriter = writerAbout;
             user.imageUrl = values.ImageUrl;
             user.mail = values.Email;
-
+            var writerpass = context.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterPassword).FirstOrDefault();
+            user.password = writerpass;
             return View(user);
         }
 
